@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
+import { RootState } from '@/types/global';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 import { Dialog, Transition } from '@headlessui/react';
 import { Cog6ToothIcon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -17,6 +19,7 @@ interface ISidebarProps {
 }
 
 const Sidebar = ({ setSidebarOpen, sidebarOpen, setSubMenuOpen, subMenuOpen, navigation }: ISidebarProps) => {
+	const { user } = useSelector((state: RootState) => state.auth);
 	const router = useRouter();
 
 	return (

@@ -3,6 +3,7 @@ import { LayoutProps } from '@/types/global';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import { FolderIcon, HomeIcon, UsersIcon, ChartPieIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 const Layout = ({ children }: LayoutProps) => {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -12,7 +13,8 @@ const Layout = ({ children }: LayoutProps) => {
 		{
 			name: 'לוח בקרה',
 			href: '/',
-			icon: HomeIcon
+			icon: HomeIcon,
+			roles: ['admin']
 		},
 		{
 			name: 'מעומדים',

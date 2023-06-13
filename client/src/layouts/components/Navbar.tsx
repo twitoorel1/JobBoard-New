@@ -1,6 +1,6 @@
 import React, { Fragment, useState, FC } from 'react';
 import store from '@/redux/store';
-import { Bars3Icon, BellIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, BellIcon, ChevronDownIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { logoutByToken } from '@/features/authentication/redux/authenticationSlice';
 import { classNames } from '@/utils/general';
+import Button from '@/components/common/Button';
 
 interface INavbar {
 	setSidebarOpen?: any;
@@ -35,15 +36,24 @@ const Navbar = ({ setSidebarOpen, userNavigation }: INavbar) => {
 
 			{/* Menu */}
 			<div className="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">
+				{user?.role === 'admin' && (
+					<div className="flex items-center ml-auto gap-x-4 lg:gap-x-6">
+						<button type="button" className="p-3 text-white bg-gray-900 rounded-lg shadow-md">
+							<Link href="/admin" className="flex items-center">
+								<AdjustmentsHorizontalIcon className="w-6 h-6" aria-hidden="true" />
+								<span className="font-semibold">תפריט מנהל</span>
+							</Link>
+						</button>
+					</div>
+				)}
+
 				<div className="flex items-center mr-auto gap-x-4 lg:gap-x-6">
 					<button type="button" className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
 						<span className="sr-only">View notifications</span>
 						<BellIcon className="w-6 h-6" aria-hidden="true" />
 					</button>
-
 					{/* Separator */}
 					<div className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" aria-hidden="true" />
-
 					{/* Profile Dropdown */}
 					<Menu as="div" className="relative">
 						<Menu.Button className="-m-1.5 flex items-center p-1.5">

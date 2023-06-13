@@ -41,6 +41,15 @@ export function AuthProvider({ children }: AuthContextProps) {
 		}
 	}, [isAuthenticated, isRegister, isError, router]);
 
+	useEffect(() => {
+		if (user?.role !== 'admin' && router.pathname.includes('/admin')) {
+			router
+				.replace('/404')
+				.then(data => data)
+				.catch(err => err);
+		}
+	}, [router, user?.role]);
+
 	return <AuthContext.Provider value={{ isAuthenticated }}>{children}</AuthContext.Provider>;
 }
 
