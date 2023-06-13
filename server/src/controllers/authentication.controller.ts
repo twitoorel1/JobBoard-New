@@ -7,6 +7,7 @@ import { SELECTED_USER_FIELDS } from '../constants/user.constants.js';
 import { registerRequestSchema, loginRequestSchema } from '../validators/authRequests.schema.js';
 import errorHandler from '../errors/errorHandlerYup.js';
 import { sendEmail } from '../services/sendEmail.services.js';
+import moment from 'moment';
 
 export async function register(req: Request, res: Response, next: NextFunction) {
 	try {

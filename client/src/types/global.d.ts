@@ -10,7 +10,7 @@ export interface AppState {
 export interface RootState {
 	app: AppState;
 	auth: AuthState;
-	// user: UserState;
+	user: UserState;
 	// Other slices of your Redux state...
 }
 
@@ -19,7 +19,7 @@ type LayoutProps = {
 	isAuthenticated?: any;
 };
 
-// Auth
+// Auth State
 export interface AuthState {
 	isAuthenticated: boolean | null;
 	token?: string | null;
@@ -27,6 +27,7 @@ export interface AuthState {
 	isRegister: boolean;
 	isError: boolean | null;
 	error: any;
+	resetToken?: string | null;
 	user?: {
 		_id: string;
 		firstName: string;
@@ -35,7 +36,6 @@ export interface AuthState {
 		email: string;
 		username: string;
 		role: string;
-		phoneNumber: string;
 		imgSRC: string;
 	} | null;
 }
@@ -57,3 +57,39 @@ export type FormLoginInputs = {
 export type ForgotPasswordInputs = {
 	email: string;
 };
+
+export type ResetPasswordInputs = {
+	password: string;
+};
+
+// User State
+export interface UserState {
+	isLoading: boolean;
+	error: any;
+	isError: boolean | null;
+	msg?: string | null;
+	user?: {
+		_id: string;
+		firstName: string;
+		lastName: string;
+		phoneNumber?: Number | undefined | string;
+		email: string;
+		username: string;
+		role: string;
+		imgSRC: string;
+		updatedPassword?: Date | undefined | string;
+		recentlyConnected?: Date | undefined | string;
+	} | null;
+	allUsers?: Array<{
+		_id: string;
+		firstName: string;
+		lastName: string;
+		phoneNumber?: Number | undefined | string;
+		email: string;
+		username: string;
+		role: string;
+		imgSRC: string;
+		updatedPassword?: Date | undefined | string;
+		recentlyConnected?: Date | undefined | string;
+	}> | null;
+}

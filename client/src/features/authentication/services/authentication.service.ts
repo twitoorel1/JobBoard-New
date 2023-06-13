@@ -28,7 +28,7 @@ export async function login(formValue: object) {
 export async function isLogin() {
 	try {
 		const token = getCookie('ac-token');
-		if (!token) Promise.reject();
+		if (!token) await Promise.reject();
 		const response = await api.post('auth/isLogin', { token });
 		return response.data;
 	} catch (error: any) {
@@ -39,7 +39,7 @@ export async function isLogin() {
 export async function logout(userId: string) {
 	try {
 		const token = getCookie('ac-token');
-		if (!token) Promise.reject();
+		if (!token) await Promise.reject();
 		const response = await api.post(`auth/logout/${userId}`, { token });
 
 		return response.data;
@@ -51,6 +51,18 @@ export async function logout(userId: string) {
 export async function forgotPassword(email: string) {
 	try {
 		const response = await api.post('auth/forgotPassword', { email });
+		return response.data;
+	} catch (error: any) {
+		return Promise.reject(error.response?.data?.message || error.message || 'Server Error');
+	}
+}
+
+export async function resetPassword(password: string) {
+	try {
+		const resetToken = await getCookie('reset-token');
+		if (!resetToken) await Promise.reject();
+		const response = await api.post(`auth/reset/${resetToken}`, { password });
+		console.log('Service: => ', response);
 		return response.data;
 	} catch (error: any) {
 		return Promise.reject(error.response?.data?.message || error.message || 'Server Error');

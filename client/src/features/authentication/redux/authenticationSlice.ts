@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { FormRegisterInputs, FormLoginInputs, AuthState } from '@/types/global';
 import { getCookie, removeCookie, setCookie } from '@/utils/cookies';
-import { register, isLogin, login, logout, forgotPassword } from '../services/authentication.service';
+import { register, isLogin, login, logout, forgotPassword, resetPassword } from '../services/authentication.service';
 
 export const registerByPayload = createAsyncThunk('authentication/registerByPayload', async (values: FormRegisterInputs) => {
 	const data = await register(values);
@@ -28,12 +28,18 @@ export const forgotPasswordByEmail = createAsyncThunk('authentication/forgotPass
 	return data;
 });
 
+export const resetPasswordByResetToken = createAsyncThunk('authentication/resetPasswordByResetToken', async (password: string) => {
+	const data = await resetPassword(password);
+	return data;
+});
+
 const initialState: AuthState = {
 	isAuthenticated: null,
 	isLoading: false,
 	isRegister: false,
 	isError: null,
 	error: '',
+	resetToken: null,
 	user: null
 };
 
@@ -141,16 +147,31 @@ export const authSlice = createSlice({
 				state.isLoading = false;
 				state.isError = true;
 				state.error = action.error.message;
-				state.user = null;
-				state.isAuthenticated = false;
 			})
 			.addCase(forgotPasswordByEmail.fulfilled, (state, { payload }: any) => {
 				state.isLoading = false;
 				state.isError = false;
-				state.isRegister = false;
-				state.isAuthenticated = false;
 				state.error = '';
-				state.user = null;
+				state.resetToken = payload.resetToken;
+				setCookie('reset-token', payload.resetToken);
+			})
+			//   Handle Reset Password By Reset Token?
+			.addCase(resetPasswordByResetToken.pending, (state, action) => {
+				state.isLoading = true;
+				state.isError = null;
+				state.error = '';
+			})
+			.addCase(resetPasswordByResetToken.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.error = action.error.message;
+			})
+			.addCase(resetPasswordByResetToken.fulfilled, (state, { payload }: any) => {
+				state.isLoading = false;
+				state.isError = false;
+				state.error = '';
+				state.resetToken = null;
+				removeCookie('reset-token', { path: '/' });
 			});
 	}
 });

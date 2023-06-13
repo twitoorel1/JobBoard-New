@@ -8,11 +8,11 @@ const router = express.Router();
 
 // Routes For All User
 router.get('/find/:id', catchAsyncError(findById));
-router.delete('/delete/:id', catchAsyncError(deleteUserById));
 router.put('/update/:id', catchAsyncError(updateUserById));
 router.put('/editPassword/:id', catchAsyncError(editPasswordById));
 
 /* Routes For Only Admin */
+router.delete('/admin/delete/:id', authRole(ERoles.admin), catchAsyncError(deleteUserById));
 router.post('/admin/new', authRole(ERoles.admin), upload.single('imgSRC'), catchAsyncError(createNewUser));
 router.get('/admin/all', authRole(ERoles.admin), catchAsyncError(getAllUsers));
 

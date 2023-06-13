@@ -11,21 +11,26 @@ export const findById = async (req: Request, res: Response, next: NextFunction) 
 	if (req.user.userId === req.params.id || req.user.role === 'admin') {
 		const user = await User.findById(req.params.id).select(REMOVE_USER_FIELDS);
 		if (!user) return next(new NotFoundError('User not found'));
-		res.status(200).json(user);
+		res.status(200).json({ data: user });
 	} else {
 		return next(new ForbiddenError('You do not have access'));
 	}
 };
 
 export const deleteUserById = async (req: Request, res: Response, next: NextFunction) => {
-	if (req.user.userId === req.params.id || req.user.role === 'admin') {
-		const user = await User.findByIdAndDelete(req.params.id).select(REMOVE_USER_FIELDS);
-		if (!user) return next(new NotFoundError('User not found'));
-		res.status(200).send('User deleted successfully');
-	} else {
-		return next(new ForbiddenError('You do not have access'));
-	}
+	const user = await User.findByIdAndDelete(req.params.id).select(REMOVE_USER_FIELDS);
+	if (!user) return next(new NotFoundError('User not found'));
+	res.status(200).send('User deleted successfully');
 };
+// export const deleteUserById = async (req: Request, res: Response, next: NextFunction) => {
+// 	if (req.user.userId === req.params.id || req.user.role === 'admin') {
+// 		const user = await User.findByIdAndDelete(req.params.id).select(REMOVE_USER_FIELDS);
+// 		if (!user) return next(new NotFoundError('User not found'));
+// 		res.status(200).send('User deleted successfully');
+// 	} else {
+// 		return next(new ForbiddenError('You do not have access'));
+// 	}
+// };
 
 export const updateUserById = async (req: Request, res: Response, next: NextFunction) => {
 	if (req.user.userId === req.params.id || req.user.role === 'admin') {
@@ -40,7 +45,7 @@ export const updateUserById = async (req: Request, res: Response, next: NextFunc
 			{ new: true }
 		);
 		if (!user) return next(new NotFoundError('User not found'));
-		res.status(200).json({ msg: 'User updated successfully', user });
+		res.status(200).json({ msg: 'User updated successfully', data: user });
 	} else {
 		return next(new ForbiddenError('You do not have access'));
 	}
@@ -102,5 +107,5 @@ export async function createNewUser(req: Request, res: Response, next: NextFunct
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
 	const users = await User.find().select(REMOVE_USER_FIELDS);
 	if (!users) return next(new NotFoundError('Users not found'));
-	res.status(200).json(users);
+	res.status(200).json({ allUsers: users });
 };

@@ -110,8 +110,9 @@ userSchema.methods.editPassword = async function (plainPassword: string) {
 };
 
 userSchema.methods.forgotPassword = async function () {
-	this.resetToken = await crypto.randomBytes(16).toString('hex');
+	this.resetToken = await crypto.randomBytes(5).toString('hex');
 	this.expireToken = Date.now() + 3600000;
+	// this.expireToken = moment().format('YYYY-MM-DD HH:mm:ss') + 3600000;
 	this.save();
 	return this.resetToken;
 };

@@ -27,9 +27,9 @@ export function AuthProvider({ children }: AuthContextProps) {
 		if (!router.pathname.includes('/authentication') || (router.pathname.includes('/authentication') && getCookieUser)) {
 			dispatch(isLoginByToken())
 				.then(data => data)
-				.catch((err: any) => console.log(err));
+				.catch(err => err);
 		}
-	}, [dispatch]);
+	}, [dispatch, router]);
 
 	useEffect(() => {
 		if (isAuthenticated === false) {
@@ -37,7 +37,7 @@ export function AuthProvider({ children }: AuthContextProps) {
 			router
 				.replace('/authentication/login')
 				.then(data => data)
-				.catch((err: any) => console.log(err));
+				.catch(err => err);
 		}
 	}, [isAuthenticated, isRegister, isError, router]);
 
