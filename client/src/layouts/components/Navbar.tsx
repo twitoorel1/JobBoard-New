@@ -1,6 +1,5 @@
 import React, { Fragment, useState, FC } from 'react';
 import store from '@/redux/store';
-import Button from '@/components/common/Button';
 import { Bars3Icon, BellIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';

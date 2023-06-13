@@ -91,16 +91,16 @@ export async function forgotPassword(req: Request, res: Response, next: NextFunc
 	if (!user) return next(new NotFoundError('User Not Found'));
 	const resetToken = await user.forgotPassword();
 
-	// await sendEmail({
-	// 	from: process.env.EMAIL_USER,
-	// 	to: user.email,
-	// 	subject: 'Password Reset Request',
-	// 	html: `
-	// 	<p>Reset Password Link Here:</p>
-	// 	<h1><strong><u>URL For Testing</u></strong></h1>
-	// 	<h5><a style="color: "red"; background-color:"blue" href="http://localhost:4000/auth/reset/${resetToken}">Link Here</a></h5>
-	// 	`
-	// });
+	await sendEmail({
+		from: process.env.EMAIL_USER,
+		to: user.email,
+		subject: 'Password Reset Request',
+		html: `
+		<p>Reset Password Link Here:</p>
+		<h1><strong><u>URL For Testing</u></strong></h1>
+		<h5><a style="color: "red"; background-color:"blue" href="${process.env.CLIENT_ENDPOINT}/authentication/reset/${resetToken}">Link Here</a></h5>
+		`
+	});
 
 	res.json({ message: 'Check your email', resetToken });
 }

@@ -12,7 +12,7 @@ const login = () => {
 					אין לך חשבון? <Link href="/authentication/register">יצירת חשבון חדש</Link>
 				</p>
 				<p className="text-sm text-center">
-					מתקשה בכניסה? <Link href="tel:0543034727">צרו קשר</Link>
+					מתקשה בכניסה? <Link href="tel:0543034727">נא ליצור קשר</Link>
 				</p>
 			</div>
 		</AuthLayout>

@@ -21,25 +21,23 @@ export function AuthProvider({ children }: AuthContextProps) {
 	const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
 	const router = useRouter();
 	const { isAuthenticated, user, isLoading, isRegister, isError } = useSelector((state: RootState) => state.auth);
-
-	// useEffect(() => {
-	// 	dispatch(isLoginByToken());
-	// }, [dispatch]);
-
 	const getCookieUser = getCookie('ac-token');
 
 	useEffect(() => {
-		if (router.pathname.includes('/authentication/') && getCookieUser) {
-			dispatch(isLoginByToken());
-		} else {
-			dispatch(isLoginByToken());
+		if (!router.pathname.includes('/authentication') || (router.pathname.includes('/authentication') && getCookieUser)) {
+			dispatch(isLoginByToken())
+				.then(data => data)
+				.catch((err: any) => console.log(err));
 		}
 	}, [dispatch]);
 
 	useEffect(() => {
 		if (isAuthenticated === false) {
 			// Redirect the user to the login page if they are not authenticated
-			router.replace('/authentication/login');
+			router
+				.replace('/authentication/login')
+				.then(data => data)
+				.catch((err: any) => console.log(err));
 		}
 	}, [isAuthenticated, isRegister, isError, router]);
 

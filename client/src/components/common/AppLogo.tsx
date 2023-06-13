@@ -9,7 +9,7 @@ type appLogoProps = {
   className?: string;
   classNameImg?: string;
   widthImg: number;
-  heightImg: number;
+  heightImg: number; 
 };
 
 const AppLogo: FC<appLogoProps> = ({

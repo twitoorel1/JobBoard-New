@@ -45,7 +45,7 @@ const LoginForm = () => {
 			{errors.password && <span className="mx-5">{errors.password.message}</span>}
 
 			<div className="my-5">
-				<Link className="my-5" href="/" label="שכחת את הסיסמא?" />
+				<Link className="my-5" href="/authentication/forgotPassword" label="שכחת את הסיסמא?" />
 			</div>
 
 			<Button label="התחבר" />

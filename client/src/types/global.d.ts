@@ -53,3 +53,7 @@ export type FormLoginInputs = {
 	username: string;
 	password: string;
 };
+
+export type ForgotPasswordInputs = {
+	email: string;
+};
