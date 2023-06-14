@@ -93,3 +93,16 @@ export interface UserState {
 		recentlyConnected?: Date | undefined | string;
 	}> | null;
 }
+
+export interface EditProfileInputs {
+	firstName?: string;
+	lastName?: string;
+	email?: string;
+	username?: string;
+}
+
+export interface EditPasswordInputs {
+	oldPassword?: string;
+	newPassword?: string;
+	confirmPassword?: string;
+}

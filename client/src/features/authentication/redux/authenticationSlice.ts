@@ -92,6 +92,7 @@ export const authSlice = createSlice({
 				state.user = payload.data;
 				state.isAuthenticated = true;
 				setCookie('ac-token', payload.token);
+				setCookie('userId', payload.data._id);
 			})
 			//   Handle isLogin?
 			.addCase(isLoginByToken.pending, (state, action) => {
@@ -136,6 +137,7 @@ export const authSlice = createSlice({
 				state.error = 'You have been logged out!';
 				state.user = null;
 				removeCookie('ac-token', { path: '/' });
+				removeCookie('userId', { path: '/' });
 			})
 			//   Handle Forgot Password?
 			.addCase(forgotPasswordByEmail.pending, (state, action) => {
