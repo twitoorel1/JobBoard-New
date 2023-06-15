@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { EditProfileInputs } from '@/types/global';
 import store from '@/redux/store';
 import { ThunkDispatch } from 'redux-thunk';
@@ -15,10 +15,11 @@ import Button from '@/components/common/Button';
 
 const EditProfileForm = () => {
 	const { user } = store.getState().auth;
+	const { msg } = store.getState().user;
 	const {
 		register,
 		handleSubmit,
-		formState: { errors }
+		formState: { errors, isSubmitSuccessful }
 	} = useForm<EditProfileInputs>({
 		resolver: yupResolver(EditProfileValidationSchema),
 		defaultValues: {
@@ -36,6 +37,14 @@ const EditProfileForm = () => {
 	const onSubmitEditProfile = async (data: EditProfileInputs) => {
 		await dispatch(editProfileByUserId(data));
 	};
+
+	// useEffect(() => {
+	// 	if (isSubmitSuccessful) {
+	// 		setTimeout(() => {
+	// 			dispatch(resetMessage());
+	// 		}, 2000);
+	// 	}
+	// }, [isSubmitSuccessful, dispatch]);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmitEditProfile)}>
@@ -97,6 +106,7 @@ const EditProfileForm = () => {
 			</div>
 
 			<Button label="לשמור" className="rounded-md" />
+			{/* {isSubmitSuccessful && <span>{msg}</span>} */}
 		</form>
 	);
 };

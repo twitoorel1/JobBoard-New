@@ -31,6 +31,12 @@ const Sidebar = () => {
 			submenu: true,
 			submenuItems: [{ title: 'Submenu 1' }, { title: 'Submenu 2' }, { title: 'Submenu 3' }]
 		},
+		{
+			title: 'Pages 2',
+			icon: <BsReverseLayoutSidebarReverse />,
+			submenu: true,
+			submenuItems: [{ title: 'Submenu 1' }, { title: 'Submenu 2' }, { title: 'Submenu 3' }]
+		},
 		{ title: 'Analytics', icon: <AiOutlineBarChart /> },
 		{ title: 'Inbox', icon: <AiOutlineMail /> },
 		{ title: 'Profile', spacing: true, icon: <BsPerson /> },

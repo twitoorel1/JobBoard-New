@@ -66,32 +66,33 @@ export type ResetPasswordInputs = {
 export interface UserState {
 	isLoading: boolean;
 	error: any;
+	errorCode: string | number | null;
 	isError: boolean | null;
 	msg?: string | null;
-	user?: {
-		_id: string;
-		firstName: string;
-		lastName: string;
-		phoneNumber?: Number | undefined | string;
-		email: string;
-		username: string;
-		role: string;
-		imgSRC: string;
-		updatedPassword?: Date | undefined | string;
-		recentlyConnected?: Date | undefined | string;
-	} | null;
-	allUsers?: Array<{
-		_id: string;
-		firstName: string;
-		lastName: string;
-		phoneNumber?: Number | undefined | string;
-		email: string;
-		username: string;
-		role: string;
-		imgSRC: string;
-		updatedPassword?: Date | undefined | string;
-		recentlyConnected?: Date | undefined | string;
-	}> | null;
+	// user?: {
+	// 	_id: string;
+	// 	firstName: string;
+	// 	lastName: string;
+	// 	phoneNumber?: Number | undefined | string;
+	// 	email: string;
+	// 	username: string;
+	// 	role: string;
+	// 	imgSRC: string;
+	// 	updatedPassword?: Date | undefined | string;
+	// 	recentlyConnected?: Date | undefined | string;
+	// } | null;
+	// allUsers?: Array<{
+	// 	_id: string;
+	// 	firstName: string;
+	// 	lastName: string;
+	// 	phoneNumber?: Number | undefined | string;
+	// 	email: string;
+	// 	username: string;
+	// 	role: string;
+	// 	imgSRC: string;
+	// 	updatedPassword?: Date | undefined | string;
+	// 	recentlyConnected?: Date | undefined | string;
+	// }> | null;
 }
 
 export interface EditProfileInputs {

@@ -18,8 +18,18 @@ type MessageProviderProps = {
 	children?: ReactNode;
 };
 
+const isLoadingTask = null;
+
 export const MessageProvider = ({ children }: MessageProviderProps) => {
 	const { isLoading, isError, error } = useSelector((state: RootState) => state.auth || {});
+	const {
+		isLoading: isLoadingUser,
+		isError: isErrorUser,
+		error: errorUser,
+		errorCode: errorCodeUser,
+		msg: MsgUser
+	} = useSelector((state: RootState) => state.user || {});
+
 	const router = useRouter();
 
 	const showMessage = useCallback(
@@ -39,20 +49,34 @@ export const MessageProvider = ({ children }: MessageProviderProps) => {
 					break;
 			}
 
+			switch (isErrorUser) {
+				case true:
+					message.destroy();
+					message.error(`${errorUser} - Code (${errorCodeUser})`);
+					break;
+				case false:
+					message.destroy();
+					message.success(errorUser || MsgUser);
+					break;
+
+				default:
+					break;
+			}
+
 			setTimeout(() => {
 				message.destroy();
 			}, 4000);
 		},
-		[isError, error, router]
+		[isError, error, router, isErrorUser, errorUser, MsgUser, errorCodeUser]
 	);
 
 	useEffect(() => {
-		if (isLoading && isError === null) {
+		if (isLoading || isLoadingUser || (isLoadingTask && isError === null)) {
 			message.loading('Loading...');
 		} else {
 			showMessage();
 		}
-	}, [isLoading, isError]);
+	}, [isLoading, isError, isLoadingUser, isErrorUser]);
 
 	return <MessageContext.Provider value={{ showMessage }}>{children}</MessageContext.Provider>;
 };

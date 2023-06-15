@@ -62,7 +62,7 @@ const Navbar = ({ setSidebarOpen, userNavigation }: INavbar) => {
 								className="w-8 h-8 rounded-full bg-gray-50"
 								width={100}
 								height={100}
-								src="/avatar/avatar.jpg"
+								src="/avatar/user-03.png"
 								alt={`תמונת פרופיל של ${user && `${user.firstName} ${user.lastName}`}`}
 							/>
 							<span className="hidden lg:flex lg:items-center">

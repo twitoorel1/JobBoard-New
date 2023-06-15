@@ -17,6 +17,26 @@ const Layout = ({ children }: LayoutProps) => {
 			roles: ['admin']
 		},
 		{
+			name: 'לקוחות',
+			href: '#',
+			icon: FolderIcon,
+			submenu: true,
+			submenuItems: [
+				{ name: 'רשימת לקוחות', href: '#', icon: UsersIcon, current: false },
+				{ name: 'צור לקוח חדש', href: '#', icon: ChartPieIcon, current: false }
+			]
+		},
+		{
+			name: 'משרות',
+			href: '#',
+			icon: FolderIcon,
+			submenu: true,
+			submenuItems: [
+				{ name: 'רשימת משרות', href: '#', icon: UsersIcon, current: false },
+				{ name: 'צור משרה חדש', href: '#', icon: ChartPieIcon, current: false }
+			]
+		},
+		{
 			name: 'מעומדים',
 			href: '#',
 			icon: FolderIcon,
@@ -43,7 +63,6 @@ const Layout = ({ children }: LayoutProps) => {
 				subMenuOpen={subMenuOpen}
 				navigation={navigation}
 			/>
-
 			<div className="lg:pr-72">
 				{/* Navbar */}
 				<Navbar setSidebarOpen={setSidebarOpen} userNavigation={userNavigation} />

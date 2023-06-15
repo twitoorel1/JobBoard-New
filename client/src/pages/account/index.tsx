@@ -33,8 +33,8 @@ const account = () => {
 
 							<div className="p-7">
 								<form>
-									<div className="mb-4 flex items-center gap-3">
-										<div className="h-14 w-14 rounded-full">
+									<div className="flex items-center gap-3 mb-4">
+										<div className="rounded-full h-14 w-14">
 											<Image src="/avatar/user-03.png" width={100} height={100} alt="profile image" />
 										</div>
 										<div>
@@ -43,7 +43,7 @@ const account = () => {
 									</div>
 
 									<div className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border-2 border-[#3C50E0] bg-gray py-4 px-4">
-										<input disabled type="file" accept="image/*" className="absolute inset-0 z-50 h-full cursor-pointer p-0 opacity-0 outline-none" />
+										<input disabled type="file" accept="image/*" className="absolute inset-0 z-50 h-full p-0 outline-none opacity-0 cursor-pointer" />
 										<div className="flex flex-col items-center justify-center space-y-3">
 											<span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#E2E8F0] bg-white">
 												<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -75,12 +75,11 @@ const account = () => {
 										</div>
 									</div>
 
-									<Button label="עדכון תמונה" className="rounded-md" />
+									<Button disabled label="עדכון תמונה" className="rounded-md" />
 								</form>
 							</div>
 						</div>
 					</div>
-					d
 				</div>
 			</div>
 		</Layout>

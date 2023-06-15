@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { RootState } from '@/types/global';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -9,6 +9,7 @@ import { Cog6ToothIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { classNames } from '@/utils/general';
 import { BsChevronDown } from 'react-icons/bs';
+import SidebarLinkGroup from '@/components/common/SidebarLinkGroup';
 
 interface ISidebarProps {
 	setSidebarOpen?: any;
@@ -21,6 +22,16 @@ interface ISidebarProps {
 const Sidebar = ({ setSidebarOpen, sidebarOpen, setSubMenuOpen, subMenuOpen, navigation }: ISidebarProps) => {
 	const { user } = useSelector((state: RootState) => state.auth);
 	const router = useRouter();
+
+	const [menuOpen, setMenuOpen] = useState(-1);
+
+	const toggleSubMenu = (index: any) => {
+		if (menuOpen === index) {
+			setMenuOpen(-1); // Close the submenu if it's already open
+		} else {
+			setMenuOpen(index); // Open the clicked submenu
+		}
+	};
 
 	return (
 		<>
@@ -79,6 +90,47 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen, setSubMenuOpen, subMenuOpen, nav
 												<ul role="list" className="-mx-2 space-y-1">
 													{navigation.map((item: any, index: string) => (
 														<Fragment key={index}>
+															<li>
+																<Link
+																	href={item.href}
+																	className={classNames(
+																		router.pathname === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800',
+																		'group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+																	)}
+																	onClick={() => toggleSubMenu(index)}
+																>
+																	<item.icon className="w-6 h-6 shrink-0" aria-hidden="true" />
+																	{item.name}
+																	{item.submenu && <BsChevronDown className={`${menuOpen === index ? 'rotate-180' : ''} duration-300`} />}
+																</Link>
+															</li>
+
+															{item.submenu && menuOpen === index && (
+																<ul>
+																	{item.submenuItems.map((submenuItem: any, index: string) => (
+																		<li key={index} className="bg-gray-50/10">
+																			<Link
+																				href={submenuItem.href}
+																				className={classNames(
+																					router.pathname === submenuItem.href
+																						? 'bg-gray-800 text-white'
+																						: 'text-gray-400 hover:text-white hover:bg-gray-800',
+																					'group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+																				)}
+																			>
+																				<submenuItem.icon className="w-6 h-6 shrink-0" aria-hidden="true" />
+																				{submenuItem.name}
+																			</Link>
+																		</li>
+																	))}
+																</ul>
+															)}
+														</Fragment>
+													))}
+												</ul>
+												{/* <ul role="list" className="-mx-2 space-y-1">
+													{navigation.map((item: any, index: string) => (
+														<Fragment key={index}>
 															<li onClick={() => item.submenu && setSubMenuOpen(!subMenuOpen)}>
 																<Link
 																	href={item.href}
@@ -122,7 +174,7 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen, setSubMenuOpen, subMenuOpen, nav
 															</li>
 														</Fragment>
 													))}
-												</ul>
+												</ul> */}
 											</li>
 											{/* <li>
 												<div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
@@ -178,71 +230,68 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen, setSubMenuOpen, subMenuOpen, nav
 								<ul role="list" className="-mx-2 space-y-1">
 									{navigation.map((item: any, index: string) => (
 										<Fragment key={index}>
-											<li onClick={() => item.submenu && setSubMenuOpen(!subMenuOpen)}>
+											<li>
 												<Link
 													href={item.href}
 													className={classNames(
 														router.pathname === item.href ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800',
 														'group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
 													)}
+													onClick={() => toggleSubMenu(index)}
 												>
 													<item.icon className="w-6 h-6 shrink-0" aria-hidden="true" />
 													{item.name}
-													{item.submenu && (
-														<BsChevronDown className={`${subMenuOpen && 'rotate-180'} duration-300`} onClick={() => setSubMenuOpen(!subMenuOpen)} />
-													)}
+													{item.submenu && <BsChevronDown className={`${menuOpen === index ? 'rotate-180' : ''} duration-300`} />}
 												</Link>
 											</li>
 
-											<li>
-												{item.submenu && subMenuOpen && (
-													<ul>
-														{item.submenuItems.map((submenuItem: any, index: string) => (
-															<li key={index} className="bg-gray-50/10">
-																<Link
-																	href={submenuItem.href}
-																	className={classNames(
-																		router.pathname === submenuItem.href
-																			? 'bg-gray-800 text-white'
-																			: 'text-gray-400 hover:text-white hover:bg-gray-800',
-																		'group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-																	)}
-																>
-																	<submenuItem.icon className="w-6 h-6 shrink-0" aria-hidden="true" />
-																	{submenuItem.name}
-																</Link>
-															</li>
-														))}
-													</ul>
-												)}
-											</li>
+											{item.submenu && menuOpen === index && (
+												<ul>
+													{item.submenuItems.map((submenuItem: any, index: string) => (
+														<li key={index} className="bg-gray-50/10">
+															<Link
+																href={submenuItem.href}
+																className={classNames(
+																	router.pathname === submenuItem.href
+																		? 'bg-gray-800 text-white'
+																		: 'text-gray-400 hover:text-white hover:bg-gray-800',
+																	'group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+																)}
+															>
+																<submenuItem.icon className="w-6 h-6 shrink-0" aria-hidden="true" />
+																{submenuItem.name}
+															</Link>
+														</li>
+													))}
+												</ul>
+											)}
 										</Fragment>
 									))}
 								</ul>
 							</li>
-							{/*
-              <li>
-									<div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
-									<ul role="list" className="mt-2 -mx-2 space-y-1">
-										{teams.map(team => (
-											<li key={team.name}>
-												<Link
-													href={team.href}
-													className={classNames(
-														team.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800',
-														'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-													)}
-												>
-													<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
-														{team.initial}
-													</span>
-													<span className="truncate">{team.name}</span>
-												</Link>
-											</li>
-										))}
-									</ul>
-								</li>
-              */}
+
+							{/* <li>
+								<div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+								<ul role="list" className="mt-2 -mx-2 space-y-1">
+									{teams.map(team => (
+										<li key={team.name}>
+											<Link
+												href={team.href}
+												className={classNames(
+													team.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800',
+													'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+												)}
+											>
+												<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+													{team.initial}
+												</span>
+												<span className="truncate">{team.name}</span>
+											</Link>
+										</li>
+									))}
+								</ul>
+							</li> */}
+
 							<li className="mt-auto">
 								<Link
 									href="/account"

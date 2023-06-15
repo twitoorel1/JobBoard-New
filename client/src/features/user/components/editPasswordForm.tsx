@@ -1,6 +1,5 @@
 import React from 'react';
 import { EditPasswordInputs } from '@/types/global';
-import store from '@/redux/store';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { useDispatch } from 'react-redux';
@@ -13,7 +12,7 @@ import EditPasswordValidationSchema from '../validations/EditPasswordValidationS
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 
-const EditProfile = () => {
+const EditPasswordForm = () => {
 	const {
 		register,
 		handleSubmit,
@@ -37,6 +36,18 @@ const EditProfile = () => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmitEditPassword)}>
+			<div className="mb-[1.375rem]">
+				<Input
+					id="editPasswordCurrentPasswordInput"
+					type="password"
+					placeholder="******"
+					showLabel
+					label="סיסמה נוכחית"
+					register={{ ...register('oldPassword') }}
+				/>
+				{errors.oldPassword && <span className="mx-5">{errors.oldPassword.message}</span>}
+			</div>
+
 			<div className="mb-[1.375rem] flex flex-col gap-[1.375rem] sm:flex-row">
 				<div className="w-full sm:w-1/2">
 					<Input
@@ -62,21 +73,9 @@ const EditProfile = () => {
 				</div>
 			</div>
 
-			<div className="mb-[1.375rem]">
-				<Input
-					id="editPasswordCurrentPasswordInput"
-					type="password"
-					placeholder="******"
-					showLabel
-					label="סיסמה נוכחית"
-					register={{ ...register('oldPassword') }}
-				/>
-				{errors.oldPassword && <span className="mx-5">{errors.oldPassword.message}</span>}
-			</div>
-
 			<Button label="לשמור" className="rounded-md" />
 		</form>
 	);
 };
 
-export default EditProfile;
+export default EditPasswordForm;

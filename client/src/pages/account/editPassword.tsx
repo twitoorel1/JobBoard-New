@@ -1,10 +1,8 @@
 import React from 'react';
 import Layout from '@/layouts/Layout';
 import Breadcrumb from '@/components/common/Breadcrumb';
-import Input from '@/components/common/Input';
-import Button from '@/components/common/Button';
 
-import EditPassword from '@/features/user/components/EditPasswordForm';
+import EditPassword from '@/features/user/components/editPasswordForm';
 
 const editPassword = () => {
 	return (
@@ -21,26 +19,9 @@ const editPassword = () => {
 
 							<div className="p-7">
 								<EditPassword />
-								{/* <form>
-									<div className="mb-[1.375rem] flex flex-col gap-[1.375rem] sm:flex-row">
-										<div className="w-full sm:w-1/2">
-											<Input type="password" placeholder="******" showLabel label="סיסמה חדשה" />
-										</div>
-										<div className="w-full sm:w-1/2">
-											<Input type="password" placeholder="******" showLabel label="אימות סיסמה חדשה" />
-										</div>
-									</div>
-
-									<div className="mb-[1.375rem]">
-										<Input type="password" placeholder="******" showLabel label="סיסמה נוכחית" />
-									</div>
-
-									<Button label="לשמור" className="rounded-md" />
-								</form> */}
 							</div>
 						</div>
 					</div>
-					{/* <div className="col-span-5 xl:col-span-2 bg-red-300">333</div> */}
 				</div>
 			</div>
 		</Layout>

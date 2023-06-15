@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { UserState } from '@/types/global';
 import { setCookie, getCookie, removeCookie } from '@/utils/cookies';
 import { editPassword, updateUser } from '../services/userSlice.service';
+import { UpdateProfileSuccess, UpdatePasswordSuccess, UpdatePasswordError, UpdateProfileError } from '@/features/constants/lang';
 
 export const editPasswordByUserId = createAsyncThunk('user/editPasswordByUserId', async (formValue: object) => {
 	const data = await editPassword(formValue);
@@ -18,8 +19,7 @@ const initialState: UserState = {
 	error: '',
 	isError: null,
 	msg: '',
-	user: null,
-	allUsers: null
+	errorCode: null
 };
 
 export const userSlice = createSlice({
@@ -35,13 +35,14 @@ export const userSlice = createSlice({
 			.addCase(editPasswordByUserId.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
-				state.error = action.error.message;
+				state.error = UpdatePasswordError;
+				state.errorCode = 'U-200';
 			})
 			.addCase(editPasswordByUserId.fulfilled, (state, { payload }: any) => {
 				state.isLoading = false;
 				state.isError = false;
 				state.error = '';
-				state.msg = payload.msg;
+				state.msg = UpdatePasswordSuccess;
 			})
 			// Handle Edit Profile By User Id
 			.addCase(editProfileByUserId.pending, (state, action) => {
@@ -50,13 +51,14 @@ export const userSlice = createSlice({
 			.addCase(editProfileByUserId.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
-				state.error = action.error.message;
+				state.error = UpdateProfileError;
+				state.errorCode = 'U-201';
 			})
 			.addCase(editProfileByUserId.fulfilled, (state, { payload }: any) => {
 				state.isLoading = false;
 				state.isError = false;
 				state.error = '';
-				state.msg = payload.msg;
+				state.msg = UpdateProfileSuccess;
 			});
 	}
 });
