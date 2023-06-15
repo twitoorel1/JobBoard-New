@@ -5,7 +5,8 @@ import moment from 'moment';
 const companySchema: Schema<ICompany> = new Schema({
 	name: {
 		type: String,
-		required: false
+		required: false,
+		unique: true
 	},
 	bnNumber: {
 		type: Number,
@@ -23,7 +24,7 @@ const companySchema: Schema<ICompany> = new Schema({
 		type: String,
 		required: false
 	},
-	address: [{ city: String, street: String, zipCode: Number }],
+	address: { city: String, street: String, zipCode: Number },
 	logo: {
 		type: String,
 		required: false
@@ -51,8 +52,6 @@ companySchema.pre<ICompany>('findOneAndUpdate', function (next) {
 	}
 	next();
 });
-
-companySchema.plugin(require('mongoose-autopopulate'));
 
 const Company = model<ICompany>('Company', companySchema);
 export default Company;

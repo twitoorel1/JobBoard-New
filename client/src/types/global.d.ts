@@ -37,6 +37,15 @@ export interface AuthState {
 		username: string;
 		role: string;
 		imgSRC: string;
+		company: {
+			_id: string;
+			name: string;
+			bnNumber: number;
+			website?: string;
+			email?: string;
+			phone?: string;
+			logo?: string;
+		};
 	} | null;
 }
 
@@ -78,6 +87,7 @@ export interface UserState {
 	// 	username: string;
 	// 	role: string;
 	// 	imgSRC: string;
+	//  company?: string[] | undefined;
 	// 	updatedPassword?: Date | undefined | string;
 	// 	recentlyConnected?: Date | undefined | string;
 	// } | null;
@@ -90,6 +100,7 @@ export interface UserState {
 	// 	username: string;
 	// 	role: string;
 	// 	imgSRC: string;
+	//  company?: string[] | undefined;
 	// 	updatedPassword?: Date | undefined | string;
 	// 	recentlyConnected?: Date | undefined | string;
 	// }> | null;

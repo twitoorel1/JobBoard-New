@@ -12,7 +12,7 @@ import moment from 'moment';
 export async function register(req: Request, res: Response, next: NextFunction) {
 	try {
 		await registerRequestSchema.validate(req.body, { abortEarly: false });
-		const { firstName, lastName, email, username, password, confirmPassword } = req.body;
+		const { firstName, lastName, email, username, password, confirmPassword, phoneNumber, role, company } = req.body;
 
 		if (password !== confirmPassword) {
 			return next(new BadRequestError("Password Don't match"));
@@ -21,7 +21,7 @@ export async function register(req: Request, res: Response, next: NextFunction) 
 		if (!req.file) return next(new UnauthorizeError('Please upload an image')); // Stop For Dev Mode
 		const { path: image } = req.file;
 
-		const user = await User.create({ firstName, lastName, email, username, password, imgSRC: image.replace('\\', '/') });
+		const user = await User.create({ ...req.body, imgSRC: image.replace('\\', '/') });
 		res.status(201).send({ error: false, data: user });
 	} catch (error: any) {
 		if (typeof 'MongoError') {
@@ -41,7 +41,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
 		if (!username || !password) return next(new BadRequestError('Username or password not provided'));
 
-		const user = await User.findOne({ username });
+		const user = await User.findOne({ username }).populate('company');
 		if (!user) return next(new NotFoundError('User not found'));
 
 		const isValidPassword = await user.comparePassword(password);
@@ -52,7 +52,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
 		user.setJwtTokens(accessToken, refreshToken);
 		user.lastConnected();
-		res.status(200).send({ error: false, data: user, token: accessToken });
+		res.status(200).send({ error: false, data: user, token: accessToken, company: user.company });
 	} catch (error: any) {
 		if (typeof 'MongoError') {
 			return next(new ServerError(error.message));
@@ -69,7 +69,7 @@ export async function isLogin(req: Request, res: Response, next: NextFunction) {
 	if (!token) return next(new BadRequestError('Token is required'));
 
 	const { userId } = verifyAccessToken(token) as JwtPayload;
-	const user = await User.findById(userId).select(SELECTED_USER_FIELDS);
+	const user = await User.findById(userId).select(SELECTED_USER_FIELDS).populate('company');
 
 	res.status(200).send({ isAuthenticated: true, user: user });
 }

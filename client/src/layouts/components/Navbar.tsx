@@ -36,17 +36,22 @@ const Navbar = ({ setSidebarOpen, userNavigation }: INavbar) => {
 
 			{/* Menu */}
 			<div className="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">
-				{user?.role === 'admin' && (
-					<div className="flex items-center ml-auto gap-x-4 lg:gap-x-6">
-						<button type="button" className="p-3 text-white bg-gray-900 rounded-lg shadow-md">
-							<Link href="/admin" className="flex items-center">
-								<AdjustmentsHorizontalIcon className="w-6 h-6" aria-hidden="true" />
-								<span className="font-semibold">תפריט מנהל</span>
-							</Link>
-						</button>
-					</div>
-				)}
+				{/* Right */}
+				<div className="flex items-center justify-center bg-green-200">
+					<h4 className="p-3 font-bold">{user?.role.toUpperCase()}</h4>
+				</div>
+				{/* {user?.role === 'admin' && ( */}
+				{/* <div className="flex items-center ml-auto gap-x-4 lg:gap-x-6">
+					<button type="button" className="p-3 text-white bg-gray-900 rounded-lg shadow-md">
+						<Link href="/admin" className="flex items-center">
+							<AdjustmentsHorizontalIcon className="w-6 h-6" aria-hidden="true" />
+							<span className="font-semibold">תפריט מנהל</span>
+						</Link>
+					</button>
+				</div> */}
+				{/* )} */}
 
+				{/* Left */}
 				<div className="flex items-center mr-auto gap-x-4 lg:gap-x-6">
 					<button type="button" className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
 						<span className="sr-only">View notifications</span>

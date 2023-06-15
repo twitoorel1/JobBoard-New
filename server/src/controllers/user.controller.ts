@@ -5,6 +5,7 @@ import { REMOVE_USER_FIELDS } from '../constants/user.constants.js';
 import { BadRequestError, ForbiddenError, NotFoundError, ServerError, UnauthorizeError } from '../errors/Errors.js';
 import { registerRequestSchema, editPasswordRequestSchema } from '../validators/authRequests.schema.js';
 import errorHandler from '../errors/errorHandlerYup.js';
+import { sendEmail } from '../services/sendEmail.services.js';
 
 /* Routes For All User */
 export const findById = async (req: Request, res: Response, next: NextFunction) => {
@@ -77,12 +78,27 @@ export async function editPasswordById(req: Request, res: Response, next: NextFu
 	}
 }
 
+// Send Email
+export async function sendEmailUser(req: Request, res: Response, next: NextFunction) {
+	const { from, client, subject, body } = req.body;
+	await sendEmail({
+		from: from,
+		to: process.env.EMAIL_USER,
+		subject: 'New Email From Website',
+		html: `
+		<p>New Email From Website:</p>
+		<p>Id: ${req.user.userId}<br/> Client: ${client}<br/> Subject: ${subject}<br/> Body: ${body}</p>
+		`
+	});
+	res.send('Send Email Success');
+}
+
 //
 /* Routes For Only Admin */
 export async function createNewUser(req: Request, res: Response, next: NextFunction) {
 	try {
 		await registerRequestSchema.validate(req.body, { abortEarly: false });
-		const { password, confirmPassword, role } = req.body;
+		const { password, confirmPassword } = req.body;
 
 		if (password !== confirmPassword) {
 			return next(new BadRequestError("Password Don't match"));
@@ -105,7 +121,7 @@ export async function createNewUser(req: Request, res: Response, next: NextFunct
 }
 
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
-	const users = await User.find().select(REMOVE_USER_FIELDS);
+	const users = await User.find().select(REMOVE_USER_FIELDS).populate('company');
 	if (!users) return next(new NotFoundError('Users not found'));
 	res.status(200).json({ allUsers: users });
 };

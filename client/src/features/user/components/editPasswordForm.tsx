@@ -48,7 +48,7 @@ const EditPasswordForm = () => {
 				{errors.oldPassword && <span className="mx-5">{errors.oldPassword.message}</span>}
 			</div>
 
-			<div className="mb-[1.375rem] flex flex-col gap-[1.375rem] sm:flex-row">
+			<div className="flex flex-col gap-3 mb-3 sm:flex-row">
 				<div className="w-full sm:w-1/2">
 					<Input
 						id="editPasswordNewPasswordInput"

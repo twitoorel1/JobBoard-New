@@ -2,7 +2,7 @@ import nodemailer, { Transporter, SendMailOptions } from 'nodemailer';
 
 interface ISendEmail {
 	from: string | undefined;
-	to: string;
+	to: string | undefined;
 	subject: string;
 	html: string;
 }

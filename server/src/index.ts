@@ -6,6 +6,7 @@ import initialMongoConnection from './initialConnection.js';
 import errorHandler from './errors/errorHandler.js';
 import moment from 'moment';
 import momentTimezone from 'moment-timezone';
+
 const app: Express = express();
 
 // Time Zone

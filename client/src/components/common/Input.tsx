@@ -12,6 +12,9 @@ type InputProps = {
 	required?: boolean;
 	showLabel?: boolean;
 	defaultValue?: string | [];
+	value?: string;
+	onChange?: any;
+	name?: string;
 };
 
 const Input: FC<InputProps> = ({
@@ -25,7 +28,10 @@ const Input: FC<InputProps> = ({
 	inputClassName,
 	placeholder = '',
 	defaultValue = '',
-	required = true
+	value = '',
+	required = true,
+	onChange = null,
+	name = ''
 }) => {
 	return (
 		<div className="my-4">
@@ -36,16 +42,21 @@ const Input: FC<InputProps> = ({
 			)}
 
 			<input
+				onChange={onChange}
 				autoComplete="false"
 				autoCorrect="false"
 				{...register}
 				type={type}
 				id={id}
+				name={name}
 				disabled={disabled}
 				placeholder={placeholder}
 				defaultValue={defaultValue}
+				value={value}
 				required={required}
-				className={`block w-full p-3 text-gray-900 text-md rounded-md bg-white border border-borderColor-secondary placeholder-slate-400 focus:border-sky-500 focus:ring-1 focus:outline-none focus:ring-[##66afe9] ${inputClassName}`}
+				className={`block w-full p-3 text-gray-900 text-md rounded-md bg-white border border-borderColor-secondary placeholder-slate-400 focus:border-sky-500 focus:ring-1 focus:outline-none focus:ring-[##66afe9] ${
+					disabled && 'text-[#555555] bg-gray-300'
+				} ${inputClassName}`}
 			/>
 		</div>
 	);

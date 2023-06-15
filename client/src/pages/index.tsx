@@ -8,7 +8,7 @@ export default function Home(): JSX.Element {
 
 	return (
 		<Layout>
-			<h1 className="text-2xl text-center">ברוך הבא {user && `${user.firstName}  ${user.lastName}`}</h1>
+			<h1 className="text-xl text-center">ברוך הבא {user && `${user.firstName}  ${user.lastName}`}</h1>
 		</Layout>
 	);
 }

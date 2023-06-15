@@ -7,7 +7,6 @@ export enum ERoles {
 	employee = 'employee',
 	client = 'client'
 }
-
 export interface IUser extends Document {
 	_id: string;
 	email: string;
@@ -17,6 +16,7 @@ export interface IUser extends Document {
 	password: string;
 	phoneNumber?: number;
 	role: string;
+	company: Schema.Types.ObjectId[] | Schema.Types.ObjectId | any;
 	imgSRC?: string;
 	resetToken?: string;
 	expireToken?: number | string;

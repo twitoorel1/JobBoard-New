@@ -90,6 +90,7 @@ export const authSlice = createSlice({
 				state.error = '';
 				state.isError = false;
 				state.user = payload.data;
+				console.log(payload.data);
 				state.isAuthenticated = true;
 				setCookie('ac-token', payload.token);
 				setCookie('userId', payload.data._id);

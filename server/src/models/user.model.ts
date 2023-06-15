@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Types, Model } from 'mongoose';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import moment from 'moment';
@@ -40,6 +40,7 @@ const userSchema: Schema<IUser> = new Schema({
 		default: ERoles.client,
 		required: [false, 'Role Is Required']
 	},
+	company: { type: Schema.Types.ObjectId, ref: 'Company' },
 	imgSRC: {
 		type: String,
 		required: false
@@ -136,5 +137,4 @@ userSchema.methods.deleteAcToken = function () {
 };
 
 const User = model<IUser>('User', userSchema);
-
 export default User;
